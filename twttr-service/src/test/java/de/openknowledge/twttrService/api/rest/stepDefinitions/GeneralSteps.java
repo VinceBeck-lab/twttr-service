@@ -199,7 +199,6 @@ public class GeneralSteps  {
         domain.getResponse().then().statusCode(statusCode);
     }
 
-    //fürBA: Eine Methode, die quasi immer das gleiche macht, und auf die 3 verschiedene Steps gemapped werden
     @Then("the HTTP response body will contain following JSON with a list of users who (liked the stored tweet|retweeted the stored tweet|follows the user john)")
     public void the_HTTP_response_body_will_contain_following_JSON_with_a_list_of_users_who_retweeted_the_stored_tweet(String expectedJson) {
         try {

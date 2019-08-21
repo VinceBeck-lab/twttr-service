@@ -1,0 +1,929 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Twttr Service API",
+    "version": "1.0",
+    "description": "This OAS2 (Swagger 2) file represents the Twttr API that lives at http:localhost:8080.",
+    "contact": {
+      "url": "http://www.openknowledge.de",
+      "name": "open knowledge GmbH",
+      "email": "kontakt@openknowledge.de"
+    },
+    "license": {
+      "name": "Apache 2.0"
+    }
+  },
+  "paths": {
+    "/tweets/{tweetId}": {
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "Tweet canceled",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {}
+          },
+          "403": {
+            "description": "No permission",
+            "schema": {}
+          },
+          "404": {
+            "description": "Found no tweet",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tweetId",
+            "type": "integer",
+            "required": true,
+            "description": "Tweet identifier",
+            "minimum": 0
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token"
+          }
+        ],
+        "operationId": "cancelTweet",
+        "summary": "Cancel tweet",
+        "description": "Request to change the state of an tweet in \"CANCELED\"",
+        "tags": [
+          "TweetService"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Found Tweet",
+            "schema": {
+              "$ref": "#/definitions/DetailedTweetDTO"
+            },
+            "examples": {}
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {}
+          },
+          "404": {
+            "description": "Tweet not found",
+            "schema": {}
+          }
+        },
+        "operationId": "getTweetDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token"
+          },
+          {
+            "in": "path",
+            "name": "tweetId",
+            "type": "integer",
+            "required": true,
+            "description": "Tweet identifier",
+            "minimum": 0
+          }
+        ],
+        "summary": "Get  tweet",
+        "description": "Request details of an tweet",
+        "tags": [
+          "TweetService"
+        ]
+      }
+    },
+    "/tweets": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Tweet created",
+            "schema": {
+              "$ref": "#/definitions/TweetDTO"
+            }
+          },
+          "400": {
+            "description": "Wrong content length for new tweet",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {},
+            "examples": {
+              "application/json": {}
+            }
+          },
+          "403": {
+            "description": "No permission"
+          }
+        },
+        "operationId": "createNewTweet",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token from an user"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/NewTweetRequest"
+            }
+          }
+        ],
+        "summary": "Create Tweet",
+        "description": "Request to create a new tweet",
+        "tags": [
+          "TweetService"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Found list of tweets",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TweetDTO"
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "tweetId": -52663781,
+                  "content": "labore tempor qui id",
+                  "pub_date": "ea",
+                  "author": {
+                    "userId": 9845176,
+                    "firstName": "id dolor voluptate nisi",
+                    "lastName": "consectetur fugiat sint"
+                  },
+                  "authentication": {
+                    "userId": -34302981,
+                    "token": "dolore sed"
+                  }
+                },
+                {
+                  "tweetId": -23899168,
+                  "content": "dolore officia irure do minim",
+                  "pub_date": "in mollit",
+                  "author": {
+                    "userId": 63475452,
+                    "firstName": "sint",
+                    "lastName": "aliqua Lorem consectetur adipisicing pariatur"
+                  },
+                  "authentication": {
+                    "userId": 32014591,
+                    "token": "tempor mollit incididunt"
+                  }
+                }
+              ]
+            }
+          },
+          "400": {
+            "description": "Wrong content for param \"index\" or param \"numTweets\" ",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            },
+            "examples": {
+              "application/json": {
+                "errorMessage": "laboris incididunt ipsum"
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "errorMessage": "laboris minim occaeca"
+              }
+            }
+          },
+          "403": {
+            "description": "No permission"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "index",
+            "type": "integer",
+            "description": "Number of tweets to be skipped for the request from the sorted tweet list",
+            "minimum": 0,
+            "default": 0
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token"
+          },
+          {
+            "in": "query",
+            "name": "numTweets",
+            "type": "integer",
+            "description": "Number of tweets to be responded",
+            "minimum": 0,
+            "default": 3
+          }
+        ],
+        "operationId": "getTweets",
+        "produces": [
+          "application/json"
+        ],
+        "description": "Request a list of the latest n tweets from users the requesting user follows, sorted by the publish date.\nIn case the transmitted token belongs to a moderator, the responded tweets will be the last n tweets shared from every user\nThe QueryParam \"numTweets\" represents the number of responded tweets.\nTo reload more tweets, the QueryParam \"index\" determains how many of the latest tweets will be skipped and where to start to get the next n tweets.",
+        "summary": "Get latest Tweets",
+        "tags": [
+          "TweetService"
+        ]
+      }
+    },
+    "/tweets/{tweetId}/liker": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Found list of liker",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserDTO"
+              }
+            },
+            "examples": {
+              "application/json": [
+                {
+                  "userId": 17918504,
+                  "firstName": "cupid",
+                  "lastName": "adipisicing ea"
+                },
+                {
+                  "userId": -19213148,
+                  "firstName": "dolore proident quis et",
+                  "lastName": "officia incididunt sint"
+                },
+                {
+                  "userId": 26945871,
+                  "firstName": "eiusmod voluptate adipisicing qui",
+                  "lastName": "ut sunt sint"
+                },
+                {
+                  "userId": -4402476,
+                  "firstName": "la",
+                  "lastName": "eu irure ad"
+                },
+                {
+                  "userId": 60347914,
+                  "firstName": "pariatur adipisicing in",
+                  "lastName": "labore laborum nostrud"
+                }
+              ]
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {}
+          },
+          "403": {
+            "description": "No permission"
+          },
+          "404": {
+            "description": "Tweet not found",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tweetId",
+            "type": "integer",
+            "required": true,
+            "description": "Tweet identifier",
+            "minimum": 0
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token from an user"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "getLiker",
+        "summary": "Get liker",
+        "description": "Request to get a list of liker of a tweet",
+        "tags": [
+          "TweetService"
+        ]
+      },
+      "post": {
+        "responses": {
+          "204": {
+            "description": "Like tweet",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "Requesting user is already a liker of the specified tweet",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {}
+          },
+          "403": {
+            "description": "No permission"
+          },
+          "404": {
+            "description": "Tweet not found",
+            "schema": {}
+          }
+        },
+        "summary": "Like",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tweetId",
+            "type": "integer",
+            "required": true,
+            "minimum": 0,
+            "description": "Tweet identifier"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token from an user"
+          }
+        ],
+        "tags": [
+          "TweetService"
+        ],
+        "description": "Request to like a tweet",
+        "operationId": "likeTweet"
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "Unlike tweet",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "Requesting user isn´t a liker of the specified tweet",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            }
+          },
+          "403": {
+            "description": "No permission",
+            "schema": {}
+          },
+          "404": {
+            "description": "Tweet not found",
+            "schema": {}
+          }
+        },
+        "summary": "Unlike",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tweetId",
+            "type": "integer",
+            "required": true,
+            "description": "Tweet identifier",
+            "minimum": 0
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token from an user"
+          }
+        ],
+        "description": "Request to unlike a tweet",
+        "operationId": "unlikeTweet",
+        "tags": [
+          "TweetService"
+        ]
+      }
+    },
+    "/users/{userId}/tweets": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Found list of tweets",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TweetDTO"
+              }
+            }
+          },
+          "400": {
+            "description": "Wrong value for param \"index\" or for param \"numTweets\"",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {}
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {}
+          }
+        },
+        "summary": "Get Tweets",
+        "description": "Request a list of the latest n tweets from a user, sorted by the publish date.\nThe QueryParam \"numTweets\" represents the number of responded tweets.\nTo reload more tweets, the Param \"index\" determains how many of the latest tweets has to be skipped.",
+        "operationId": "getTweetsFromUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "integer",
+            "required": true,
+            "description": "User identifier"
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Should contain a valid token"
+          },
+          {
+            "in": "query",
+            "name": "index",
+            "type": "integer",
+            "description": "Describes the index of the sorted list of tweets from where the next n tweets will be responded",
+            "minimum": 0
+          },
+          {
+            "in": "query",
+            "name": "numTweets",
+            "type": "integer",
+            "description": "Determines the number of responded Tweets",
+            "minimum": 0
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/users/{userId}/follower": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Found list of follower",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserDTO"
+              }
+            }
+          },
+          "400": {
+            "description": "Specified account belongs to a moderator",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {}
+          },
+          "403": {
+            "description": "No permission"
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {}
+          }
+        },
+        "summary": "Get follower",
+        "description": "Request to get a list of follower of an user",
+        "operationId": "getFollower",
+        "tags": [
+          "UserService"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "integer",
+            "required": true,
+            "description": "User identifier",
+            "minimum": 0
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token from an user"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "responses": {
+          "204": {
+            "description": "Follow user",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "Requesting user is already a follower of the specified user or specified user is a moderator",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {}
+          },
+          "403": {
+            "description": "No permission",
+            "schema": {}
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {}
+          }
+        },
+        "summary": "Follow user",
+        "description": "Request to follow a specified user",
+        "operationId": "followUser",
+        "tags": [
+          "UserService"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "integer",
+            "required": true,
+            "description": "User identifier ",
+            "minimum": 0
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token form an user"
+          }
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "Unfollow user",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "Requesting account or account to unfollow is not an user-account",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {
+              "$ref": "#/definitions/ErrorDTO"
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {}
+          }
+        },
+        "summary": "Unfollow user",
+        "description": "Request to stop following a specified user",
+        "operationId": "unfollowUser",
+        "tags": [
+          "UserService"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "integer",
+            "required": true,
+            "description": "Member identifier",
+            "minimum": 0
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token from an user"
+          }
+        ]
+      }
+    },
+    "/tweets/{tweetId}/retweets": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Retweeted tweet",
+            "schema": {
+              "$ref": "#/definitions/TweetDTO"
+            }
+          },
+          "401": {
+            "description": "Invalid token",
+            "schema": {}
+          },
+          "403": {
+            "description": "No permission"
+          },
+          "404": {
+            "description": "Tweet not found",
+            "schema": {}
+          }
+        },
+        "summary": "Retweet",
+        "description": "Request to retweet a stored tweet",
+        "operationId": "retweetTweet",
+        "tags": [
+          "TweetService"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tweetId",
+            "type": "integer",
+            "required": true,
+            "description": "Tweet identifier",
+            "minimum": 0
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token from an user"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/tweets/{tweetId}/retweets/authors": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Found retweeter",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserDTO"
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "No permission"
+          },
+          "404": {
+            "description": "Tweet not found"
+          }
+        },
+        "summary": "Get retweeter",
+        "description": "Request to get a list of retweeter of a tweet",
+        "operationId": "getRetweeter",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tweetId",
+            "type": "integer",
+            "required": true,
+            "description": "Tweet identifier",
+            "minimum": 0
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token from an user"
+          }
+        ],
+        "tags": [
+          "TweetService"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Found users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserDTO"
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          }
+        },
+        "summary": "Get users",
+        "description": "Request to get a list of n users, sorted in first grade by their userName, in second grade by their firstName and in third grade by their lastName.\nThe QueryParam \"searchString\" determines a string which must appear in the userName, firstName or lastName.",
+        "operationId": "getUsers",
+        "tags": [
+          "UserService"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Must contain a valid token"
+          },
+          {
+            "in": "query",
+            "name": "searchString",
+            "type": "string",
+            "description": "A string to filter the responded users.\nThe string must appear in the userName, firstName or lastName of the users"
+          },
+          {
+            "in": "query",
+            "name": "numUsers",
+            "type": "integer",
+            "description": "Number of returning users",
+            "minimum": 0
+          },
+          {
+            "in": "query",
+            "name": "index",
+            "type": "integer",
+            "description": "Number of users to be skipped for the response from a list of sorted users",
+            "minimum": 0
+          }
+        ]
+      }
+    }
+  },
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "definitions": {
+    "UserDTO": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      },
+      "description": "Represents an object of a user"
+    },
+    "TweetDTO": {
+      "type": "object",
+      "description": "Represents a single tweet",
+      "properties": {
+        "tweetId": {
+          "type": "integer"
+        },
+        "content": {
+          "type": "string"
+        },
+        "pubDate": {
+          "type": "string",
+          "example": "2019.01.16",
+          "description": "Publishing date of the tweet"
+        },
+        "author": {
+          "$ref": "#/definitions/UserDTO"
+        }
+      }
+    },
+    "ErrorDTO": {
+      "type": "object",
+      "description": "A object sended to client in case of an failed request",
+      "properties": {
+        "errorMessage": {
+          "type": "string",
+          "description": "Describes why the request failed",
+          "example": "Invalid token"
+        }
+      }
+    },
+    "NewTweetRequest": {
+      "type": "object",
+      "description": "An object sended from the client to the service to create a new tweet",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The content of the new tweet",
+          "minLength": 1,
+          "maxLength": 140
+        }
+      }
+    },
+    "DetailedTweetDTO": {
+      "type": "object",
+      "properties": {
+        "tweetId": {
+          "type": "integer"
+        },
+        "content": {
+          "type": "string"
+        },
+        "pubDate": {
+          "type": "string",
+          "description": "Publishing date of the tweet"
+        },
+        "author": {
+          "$ref": "#/definitions/UserDTO"
+        },
+        "numLiker": {
+          "type": "integer",
+          "description": "Number of liker of the tweet"
+        },
+        "numRetweeter": {
+          "type": "integer",
+          "description": "Number of retweeter of the tweet"
+        }
+      }
+    }
+  },
+  "host": "localhost:8080",
+  "tags": [
+    {
+      "name": "UserService"
+    },
+    {
+      "name": "TweetService"
+    }
+  ]
+}

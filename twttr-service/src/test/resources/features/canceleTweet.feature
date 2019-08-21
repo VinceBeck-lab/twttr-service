@@ -7,7 +7,7 @@ Feature: Cancel a tweet
   - If the request doesn´t contain a valid token, then the http response status-code will be 401
   - If the specified tweet doesn´t exist or is already in status "CANCELED", then the http response status-code will be 404
 
-  Scenario: Cancele a tweet
+  Scenario: Cancel a tweet
   Request to set a specified tweet in status CANCELED
 
     Given the user "max" is authenticated

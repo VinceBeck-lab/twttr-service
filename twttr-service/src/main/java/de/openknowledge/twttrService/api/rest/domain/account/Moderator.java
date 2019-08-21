@@ -11,8 +11,4 @@ public class Moderator extends Account{
         // for JPA
     }
 
-/*    public Moderator (String firstName, String lastName, String userName) {
-        super (firstName, lastName, userName);
-        setRole(AccountType.MODERATOR);
-    }*/
 }
