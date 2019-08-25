@@ -170,7 +170,6 @@ public class DBConnection {
     }
 
     public static void clearTables () {
-        //todo: Löscht nicht die Daten aus TAB_ACCOUNT --> Namen ändern?
         try {
             DatabaseOperation.DELETE_ALL.execute(connection, CustomizedDataSetBuilder.emptyTableDataSet());
         } catch (DatabaseUnitException | SQLException e) {

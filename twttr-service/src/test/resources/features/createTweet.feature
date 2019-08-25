@@ -6,7 +6,6 @@ Feature: Create tweet
   - The request has to contain an valid token to craete a new tweet
   - Just Users are allowed to share tweets
 
-  #fürBA: 2 unterschiedliche Weisen wie JSON Datei beschrieben werden kann
 
   Scenario: Create a new tweet
   Request to create a new tweet and the tweetId will be generated from the database.

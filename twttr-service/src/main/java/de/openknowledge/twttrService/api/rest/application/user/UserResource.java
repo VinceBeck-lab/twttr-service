@@ -85,7 +85,6 @@ public class UserResource {
     @Transactional
     public Response followUser (@PathParam("userId") final Integer userId) {
         LOG.info("Request to follow user with id {}", userId);
-        //User requester = (User) authenticatedAccount;
         User requester = repository.findUserById(authenticatedAccount.getAccountId());
 
         Account accountToFollow = repository.findAccountById(userId);

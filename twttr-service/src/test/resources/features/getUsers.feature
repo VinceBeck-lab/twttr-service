@@ -9,7 +9,6 @@ Feature: Get user information
   - If the QueryParam "searchString" isn´t specified, then its default value will be ''
   - If the request doesn´t contain a valid token, then the http response status-code will be 401
 
-  #fürBA: TypeRegistry hieran vorstellen? Oder lieber an einem Beispiel einer Liste von Tweets? --> nur eine Registrierung möglich (Abfragen, ob Daten gesetzt sind also nötig, wenn unterschiedliche Arten der Initialisierung gewünscht
   Background: Persist accounts
     Given the user "max" is authenticated
     Given the moderator "werner" is authenticated

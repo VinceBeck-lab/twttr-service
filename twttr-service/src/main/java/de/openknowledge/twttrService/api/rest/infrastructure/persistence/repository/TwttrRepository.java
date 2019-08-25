@@ -57,7 +57,6 @@ public class TwttrRepository {
         List<User> users = query.getResultList();
         if (users == null || users.size() == 0) {
             LOG.info("Found no user with searchString {}", searchString);
-            //todo: hier keine NotFoundException werfen, damit leere Liste zurückgegeben wird, wenn SearchString Inhalt von User hat, den es nicht gibt
         }
         LOG.info("Found {} users with containing searchString {}", users.size(), searchString);
         return users;
@@ -80,7 +79,6 @@ public class TwttrRepository {
         List<Tweet> tweets = query.getResultList();
         if (tweets == null || tweets.size() == 0) {
             LOG.info("Found no tweets in state PUBLISH from user with id {}", userId);
-            //todo: hier keine NotFoundException werfen, damit leere Liste zurückgegeben wird, wenn SearchString Inhalt von User hat, den es nicht gibt
         }
         LOG.info("Found {} tweets in state PUBLISH from user with id {}", tweets.size(), userId);
         return tweets;
@@ -118,7 +116,6 @@ public class TwttrRepository {
         Account account = em.find(Account.class, accountId);
         if (account == null) {
             LOG.info("Found no account with id {}", accountId);
-            //todo: muss AccountNotFoundException() sein
             throw new UserNotFoundException(accountId);
         }
         LOG.info("Found account with id {}", accountId);

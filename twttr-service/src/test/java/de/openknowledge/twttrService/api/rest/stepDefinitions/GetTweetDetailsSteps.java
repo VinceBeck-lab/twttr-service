@@ -103,7 +103,6 @@ public class GetTweetDetailsSteps {
                 .body("rootTweet", Matchers.isEmptyOrNullString());
     }
 
-    //fürBA: auf rootTweet.tweetId achten
     @Then("the HTTP response body will contain following JSON with detailed information about the retweet with id 2")
     public void the_HTTP_response_body_will_contain_following_JSON_with_detailed_information_about_the_retweet_with_id(DetailedTweet expectedTweet) {
         domain.getResponse().then()

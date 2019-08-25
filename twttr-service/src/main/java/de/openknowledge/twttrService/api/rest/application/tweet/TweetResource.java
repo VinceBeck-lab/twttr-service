@@ -217,7 +217,7 @@ public class TweetResource {
 
         Tweet tweetToRetweet = repository.findTweetById(tweetId);
         if (tweetToRetweet.getState() == TweetState.CANCELED) { return Response.status(Response.Status.NOT_FOUND).build(); }
-        tweetToRetweet = tweetToRetweet.getRootTweet() != null ? tweetToRetweet.getRootTweet() : tweetToRetweet;        //case Tweet is already a retweet
+        tweetToRetweet = tweetToRetweet.getRootTweet() != null ? tweetToRetweet.getRootTweet() : tweetToRetweet;
         Tweet retweet = Tweet.newTweet()
                 .withContent(tweetToRetweet.getContent())
                 .withAuthor(requester)

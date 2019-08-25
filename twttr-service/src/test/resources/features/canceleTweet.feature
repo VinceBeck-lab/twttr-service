@@ -26,7 +26,6 @@ Feature: Cancel a tweet
 
 
 
-  #fürBA: in jedem Szeanrio wird wieder ein stored tweet with id 1 from user max angelegt... damit die Szenarien unabhängig voneinander sind
   Scenario: Moderator cancel tweet
   Moderators can cancel the tweets from every user
 
@@ -46,7 +45,6 @@ Feature: Cancel a tweet
 
 
 
-    #fürBA: Letzten beiden Szenarien testen ein Kriterium --> mehrere Szenarien können ein Kriterium erklären
   Scenario: Tweet to cancel doesn´t exist
   The tweet to cancel must exist
 

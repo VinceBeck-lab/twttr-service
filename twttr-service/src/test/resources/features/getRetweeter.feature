@@ -7,7 +7,6 @@ Feature: Get retweeter of a specified tweet
   - If the specified tweet doesn´t exist or is in state "CANCELED", then the http response status-code will be 404
 
 
-  #fürBA: Interessanter "And" Step
   Scenario: Get a list of retweeter of a specified tweet
   Requesting a list of retweeter of a specified tweet
 

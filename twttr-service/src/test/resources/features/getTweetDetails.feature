@@ -31,7 +31,6 @@ Feature: Get detailed information about a specified tweet
         """
 
 
-    #fürBA: Immer noch nicht ausreichend.. Immer noch offen, was mit den Likern des Root-Tweets passiert.. werden die mit übernommen? Hier hat Entwickler Spielraum und kann es so implementieren, wie er meint
   Scenario: Tweet to get detailed information about is a retweet
   Requesting information about a specified retweet
 
